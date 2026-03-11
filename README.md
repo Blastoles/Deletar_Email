@@ -61,6 +61,45 @@ Siga as instruções na tela:
 2. Visualize a lista de emails.
 3. Escolha uma ação (Deletar específicos, deletar exibidos ou limpar pasta).
 
+## Visualização do Sistema
+
+Aqui estão alguns exemplos de como o sistema aparece no terminal:
+
+### 1. Menu de Seleção de Pastas
+O sistema lista todas as pastas disponíveis na sua conta:
+```text
+                          Pastas Disponíveis                           
+ ┌────┬──────────────────────────────────────────────────────────────┐
+ │ Nº │ Nome da Pasta                                                │
+ ├────┼──────────────────────────────────────────────────────────────┤
+ │  1 │ INBOX                                                        │
+ │  2 │ [Gmail]/Enviados                                             │
+ │  3 │ [Gmail]/Lixeira                                              │
+ │  4 │ [Gmail]/Spam                                                 │
+ └────┴──────────────────────────────────────────────────────────────┘
+Selecione uma pasta pelo número (0 para sair): 
+```
+
+### 2. Listagem de Emails
+Após selecionar uma pasta, você verá os emails mais recentes:
+```text
+                          Últimos 20 Emails                            
+ ┌────┬────────────────────────────┬────────────────────────┬─────────┐
+ │ Nº │ De                         │ Assunto                │ ID      │
+ ├────┼────────────────────────────┼────────────────────────┼─────────┤
+ │  1 │ newsletters@example.com    │ Sua atualização diária │ 12345   │
+ │  2 │ suporte@servico.com        │ Redefinição de senha   │ 12346   │
+ │  3 │ promo@loja.com             │ Oferta imperdível!     │ 12347   │
+ └────┴────────────────────────────┴────────────────────────┴─────────┘
+
+Opções:
+[1] Deletar email(s) específico(s)
+[2] Deletar TODOS os emails DA LISTA ACIMA
+[3] Deletar TODOS os emails desta PASTA
+[0] Voltar
+Selecione uma ação: 
+```
+
 ## Segurança
 
 - Suas credenciais são usadas apenas localmente para conexão direta com o servidor IMAP.
