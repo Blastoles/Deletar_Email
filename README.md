@@ -9,7 +9,10 @@ Este é um sistema CLI (Linha de Comando) simples e eficiente para gerenciar e e
 - Navegação entre pastas.
 - Visualização dos últimos emails.
 - Opção para excluir emails específicos.
+- Opção para excluir todos os emails de um **REMETENTE específico**.
 - Opção para excluir **TODOS** os emails de uma pasta (Limpeza total).
+- **Backup Completo**: Baixa todos os emails de uma pasta no formato `.eml` (Preserva anexos e imagens).
+- **Restauração**: Faz o upload de arquivos `.eml` de volta para qualquer pasta do servidor.
 - Interface bonita e colorida usando a biblioteca `rich`.
 
 ## Requisitos
@@ -96,9 +99,19 @@ Opções:
 [1] Deletar email(s) específico(s)
 [2] Deletar TODOS os emails DA LISTA ACIMA
 [3] Deletar TODOS os emails desta PASTA
+[4] Deletar todos os emails de um REMETENTE específico
+[5] Fazer BACKUP de todos os emails desta PASTA (.eml)
+[6] RESTAURAR backup para esta PASTA
 [0] Voltar
-Selecione uma ação: 
+Selecione uma ação: 5
+
+Digite o nome da pasta local para o backup (padrão: backup_INBOX): 
+Fazendo backup de 150 emails...
+Backup concluído em: backup_INBOX
 ```
+
+### 4. Backup e Restauração
+O sistema agora permite salvaguardar seus emails localmente. O arquivo `.eml` é compatível com a maioria dos clientes de email (Outlook, Thunderbird, Apple Mail).
 
 ## Segurança
 

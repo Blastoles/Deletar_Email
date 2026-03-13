@@ -129,9 +129,23 @@ class EmailService:
                 for response_part in msg_data:
                     if isinstance(response_part, tuple):
                         msg = email.message_from_bytes(response_part[1])
-                        subject, encoding = decode_header(msg["Subject"])[0]
-                        if isinstance(subject, bytes):
-                            subject = subject.decode(encoding if encoding else "utf-8")
+                        
+                        raw_subject = msg.get("Subject")
+                        if raw_subject:
+                            try:
+                                subject_parts = decode_header(raw_subject)[0]
+                                subject, encoding = subject_parts
+                                if isinstance(subject, bytes):
+                                    # Caso a codificação seja desconhecida (ex: unknown-8bit), tratamos o erro
+                                    try:
+                                        subject = subject.decode(encoding if encoding else "utf-8", "ignore")
+                                    except (LookupError, UnicodeDecodeError):
+                                        # Fallback para utf-8 ou latin-1 ignorando erros
+                                        subject = subject.decode("utf-8", "replace")
+                            except Exception:
+                                subject = str(raw_subject)
+                        else:
+                            subject = "Sem_Assunto"
                         
                         from_ = msg.get("From")
                         date_ = msg.get("Date")
@@ -158,6 +172,34 @@ class EmailService:
         # Expunge to permanently remove
         self.mail.expunge()
         return True
+
+    def fetch_full_email(self, email_id):
+        """Fetches the complete RFC822 data of an email."""
+        if not self.mail:
+            return None
+        
+        status, data = self.mail.fetch(email_id, '(RFC822)')
+        if status != "OK":
+            return None
+            
+        for response_part in data:
+            if isinstance(response_part, tuple):
+                return response_part[1]
+        return None
+
+    def create_folder(self, folder_name):
+        """Cria uma nova pasta no servidor."""
+        if not self.mail:
+            return False
+        status, response = self.mail.create(f'"{folder_name}"')
+        return status == "OK"
+
+    def append_email(self, folder_name, msg_bytes):
+        """Adiciona um email a uma pasta específica."""
+        if not self.mail:
+            return False
+        status, response = self.mail.append(f'"{folder_name}"', None, None, msg_bytes)
+        return status == "OK"
 
     def close(self):
         """Closes the connection."""
