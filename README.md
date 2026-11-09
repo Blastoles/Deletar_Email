@@ -1,75 +1,87 @@
-# Sistema de Exclusão de Emails via Terminal
+<div align="center">
 
-Este é um sistema CLI (Linha de Comando) simples e eficiente para gerenciar e excluir emails diretamente pelo terminal, utilizando Python.
+# 📧 Deletar Email — Gerenciador & Backup IMAP via Terminal
 
-## Funcionalidades
+**Ferramenta CLI interativa em Python (`Rich`) para limpeza em massa de caixas de e-mail, exclusão por remetente e backup/restauração local no formato `.eml`.**
 
-- Conexão segura via IMAP (Gmail e outros).
-- Listagem visual das pastas de email.
-- Navegação entre pastas.
-- Visualização dos últimos emails.
-- Opção para excluir emails específicos.
-- Opção para excluir todos os emails de um **REMETENTE específico**.
-- Opção para excluir **TODOS** os emails de uma pasta (Limpeza total).
-- **Backup Completo**: Baixa todos os emails de uma pasta no formato `.eml` (Preserva anexos e imagens).
-- **Restauração**: Faz o upload de arquivos `.eml` de volta para qualquer pasta do servidor.
-- Interface bonita e colorida usando a biblioteca `rich`.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![IMAP](https://img.shields.io/badge/Protocolo-IMAP4_SSL-brightgreen?style=for-the-badge)](https://github.com/Blastoles/Deletar_Email)
+[![Rich CLI](https://img.shields.io/badge/Terminal_UI-Rich-8A2BE2?style=for-the-badge)](https://github.com/Textualize/rich)
 
-## Requisitos
+[🚀 Funcionalidades](#-funcionalidades) •
+[💻 Instalação & Configuração](#-instalação) •
+[🖥️ Visualização no Terminal](#️-visualização-do-sistema) •
+[🌐 English Summary](#-english-summary)
 
-- Python 3.8+
-- Conta de email com acesso IMAP habilitado (Para Gmail, necessário usar "Senha de Aplicativo").
+</div>
 
-## Instalação
+---
 
-1. Clone o repositório ou baixe os arquivos.
-2. Crie um ambiente virtual (recomendado):
+## 🎯 O Problema que Resolve
+
+Quando uma caixa de e-mail corporativa (Locaweb, KingHost, cPanel, Zimbra, Gmail, Outlook) atinge 100% da cota de armazenamento com milhares de notificações automáticas, newsletters ou alertas antigos, apagar pelo Webmail de 50 em 50 páginas leva horas.
+
+O **Deletar Email** conecta diretamente via protocolo **IMAP**, permitindo:
+- **Fazer backup completo** de pastas inteiras em arquivos `.eml` (preservando anexos, cabeçalhos e imagens inline);
+- **Restaurar backups `.eml`** para qualquer conta ou pasta IMAP (ótimo para migração de servidores de e-mail);
+- **Exterminar milhares de e-mails de um remetente específico** ou limpar pastas inteiras em segundos.
+
+---
+
+## 🚀 Funcionalidades
+
+- 🔒 **Conexão Segura via IMAP**: Compatível com Gmail, Outlook, Locaweb, cPanel/Roundcube, Zimbra e qualquer servidor IMAP.
+- 📂 **Navegação Visual de Pastas**: Lista todas as pastas da conta (`INBOX`, `Enviados`, `Spam`, `Lixeira`, pastas customizadas).
+- 🎯 **Exclusão por Remetente**: Apaga todos os e-mails recebidos de um endereço específico (ex: `no-reply@sistema.com`).
+- 🧹 **Limpeza Total de Pasta**: Esvazia pastas lotadas de uma só vez.
+- 💾 **Backup Completo (`.eml`)**: Baixa todos os e-mails de uma pasta para o computador mantendo compatibilidade com Outlook, Thunderbird e Apple Mail.
+- 📤 **Restauração (`.eml` -> IMAP)**: Faz upload de arquivos `.eml` locais de volta para qualquer pasta do servidor.
+- 🎨 **Interface TUI Colorida**: Construída com a biblioteca `rich` para tabelas e menus legíveis no terminal.
+
+---
+
+## 💻 Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/Blastoles/Deletar_Email.git
+   cd Deletar_Email
+   ```
+2. Crie um ambiente virtual e instale as dependências:
    ```bash
    python -m venv venv
    # Windows
    .\venv\Scripts\activate
    # Linux/Mac
    source venv/bin/activate
-   ```
-3. Instale as dependências:
-   ```bash
+
    pip install -r requirements.txt
    ```
 
-## Configuração
+## ⚙️ Configuração
 
-1. Renomeie o arquivo `.env.example` para `.env`:
+1. Copie o arquivo de exemplo `.env.example` para `.env`:
    ```bash
-   cp .env.example .env
-   # ou no Windows
    copy .env.example .env
    ```
-2. Edite o arquivo `.env` com suas credenciais:
+2. Preencha suas credenciais no `.env` (no Gmail, utilize uma **Senha de Aplicativo**):
    ```env
    EMAIL_USER=seu_email@gmail.com
    EMAIL_PASSWORD=sua_senha_de_aplicativo
    IMAP_SERVER=imap.gmail.com
    ```
-   > **Nota:** Se não configurar o `.env`, o sistema pedirá as credenciais ao iniciar.
+   > **Nota:** Se o arquivo `.env` não estiver configurado, o sistema solicitará as credenciais de forma interativa ao iniciar.
 
-## Uso
+3. Execute o sistema:
+   ```bash
+   python main.py
+   ```
 
-Execute o arquivo principal:
-```bash
-python main.py
-```
+---
 
-Siga as instruções na tela:
-1. Selecione a pasta que deseja gerenciar.
-2. Visualize a lista de emails.
-3. Escolha uma ação (Deletar específicos, deletar exibidos ou limpar pasta).
-
-## Visualização do Sistema
-
-Aqui estão alguns exemplos de como o sistema aparece no terminal:
+## 🖥️ Visualização do Sistema
 
 ### 1. Menu de Seleção de Pastas
-O sistema lista todas as pastas disponíveis na sua conta:
 ```text
                           Pastas Disponíveis                           
  ┌────┬──────────────────────────────────────────────────────────────┐
@@ -83,8 +95,7 @@ O sistema lista todas as pastas disponíveis na sua conta:
 Selecione uma pasta pelo número (0 para sair): 
 ```
 
-### 2. Listagem de Emails
-Após selecionar uma pasta, você verá os emails mais recentes:
+### 2. Listagem de E-mails, Limpeza e Backup
 ```text
                           Últimos 20 Emails                            
  ┌────┬────────────────────────────┬────────────────────────┬─────────┐
@@ -104,16 +115,21 @@ Opções:
 [6] RESTAURAR backup para esta PASTA
 [0] Voltar
 Selecione uma ação: 5
-
-Digite o nome da pasta local para o backup (padrão: backup_INBOX): 
-Fazendo backup de 150 emails...
-Backup concluído em: backup_INBOX
 ```
 
-### 4. Backup e Restauração
-O sistema agora permite salvaguardar seus emails localmente. O arquivo `.eml` é compatível com a maioria dos clientes de email (Outlook, Thunderbird, Apple Mail).
+---
 
-## Segurança
+## 🌐 English Summary
 
-- Suas credenciais são usadas apenas localmente para conexão direta com o servidor IMAP.
-- Recomenda-se o uso de Variáveis de Ambiente ou Senhas de Aplicativo para maior segurança.
+**Deletar Email** is an interactive Python CLI utility (powered by `Rich`) for managing, cleaning, backing up, and migrating email accounts over **IMAP**.
+
+- **Bulk Email Cleaner**: Delete all emails from a specific sender or purge entire IMAP folders in seconds.
+- **Full `.eml` Backup & Restore**: Download entire IMAP folders locally as standard `.eml` files (preserving attachments and headers) and restore/upload `.eml` backups back to any IMAP server.
+
+---
+
+<div align="center">
+
+Desenvolvido por **[Igor Cezario Pereira (Blastoles)](https://github.com/Blastoles)**
+
+</div>
